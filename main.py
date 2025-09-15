@@ -11,7 +11,7 @@ class Movis:
         self.plays = 0
 
     def __str__(self):
-        return f"{self.title} {self.yers} {self.plays}"
+        return f"{self.title} {self.yers}"
     
     def play(self):
        self.plays += 1
@@ -23,7 +23,7 @@ class Series(Movis):
         self.episode = episode
 
     def __str__(self):
-        return f"{self.title} S0{self.season}E0{self.episode} {self.plays}"
+        return f"{self.title} S{self.season:02}E{self.episode:02}"
         
 def creator_library(how_many):
     library = []
@@ -31,7 +31,7 @@ def creator_library(how_many):
     for i in range(0,how_many):
         i = Movis(title=fake.word().title(), yers=random.randint(1895, 2025), genre = random.choice(genres))
         library.append(i)
-        i = Series(title=fake.word().title(), yers=random.randint(1895, 2025), genre = random.choice(genres), season = random.randint(1,10), episode = random.randint(1,10))
+        i = Series(title=fake.word().title(), yers=random.randint(1895, 2025), genre = random.choice(genres), season = random.randint(1,15), episode = random.randint(1,24))
         library.append(i)    
     return library
 
@@ -56,28 +56,31 @@ def generate_views10(rental):
 
 def top_titles(rental):
     how = int(input("Podaj ile tytułów mam wyświetlić: "))
-    top = sorted(rental, key=lambda rental:rental.plays, reverse=True)
+    top = sorted(rental, key=lambda ren:ren.plays, reverse=True)
     najj = (top[:how])
-    for n in najj:
-        print(n)
+    return najj
 
 def search(rental):
-    element = str(input("podaj szykany tytuł: "))
+    element = input("podaj szykany tytuł: ")
     szukana = (obj for obj in rental if obj.title == element)
     return szukana 
 
 if __name__=='__main__':
     today = date.today()
-    print("Biblioteka Filmów")
+    print("Biblioteka Filmów:")
     rental = creator_library(5)
     for r in rental:
         print(r)
 
     generate_views10(rental)
-    for r in rental:
-        print(r)
    
     print(f"Najpopularniejsze filmy i seriale dnia {today.day}.{today.month}.{today.year}")
-    top_titles(rental)
+    toop=top_titles(rental)
+    for t in toop:
+        print(t)
+
    
-    print(search(rental))
+    szuk =search(rental)
+    for s in szuk:
+        print(s)
+
