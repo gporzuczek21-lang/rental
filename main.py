@@ -78,9 +78,7 @@ if __name__=='__main__':
     toop=top_titles(rental)
     for t in toop:
         print(t)
-
    
     szuk =search(rental)
     for s in szuk:
         print(s)
-
